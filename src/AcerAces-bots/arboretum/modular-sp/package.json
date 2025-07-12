@@ -1,0 +1,13 @@
+{
+	"name": "acer-aces-modular-sp",
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"build": "tsc -p ./tsconfig.json",
+		"start": "node dist/index.js"
+	},
+	"devDependencies": {
+		"@types/node": "^24.0.13",
+		"typescript": "^5.0.0"
+	}
+}

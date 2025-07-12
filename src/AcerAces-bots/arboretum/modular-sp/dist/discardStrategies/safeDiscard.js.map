@@ -1,0 +1,1 @@
+{"version":3,"file":"safeDiscard.js","sourceRoot":"","sources":["../../discardStrategies/safeDiscard.ts"],"names":[],"mappings":"AAEA,MAAM,UAAU,WAAW,CAAC,KAAwB;IACnD,iDAAiD;IACjD,MAAM,WAAW,GAAG,KAAK,CAAC,IAAI,CAAC,IAAI,CAAC,CAAC,CAAC,EAAE,CAAC,EAAE,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC;IAC3D,OAAO,WAAW,CAAC,CAAC,CAAE,CAAC;AACxB,CAAC"}
