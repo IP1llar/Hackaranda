@@ -20,14 +20,6 @@
     "variables": ["priority=12345678"],
     "path": "./js/randomPriority"
 	},
-  {
-		"dockerId": "mattsrdocker/acer-aces:spite",
-		"identifier": "Spite"
-	},
-  {
-		"dockerId": "mattsrdocker/acer-aces-modular-strategic-spiteful",
-		"identifier": "Strategic Spiteful"
-	},
 	{
 		"dockerId": "arboretum-discard-rarest-bot",
 		"identifier": "Discard Rarest",
@@ -79,12 +71,33 @@
     "path": "./python/randomMessage"
 	},
 	{
-		"dockerId": "zebbo/arboretum:majestic_maple",
-		"identifier": "Majestic Maple"
-	},
-	{
 		"dockerId": "arboretum-random-csharp",
 		"identifier": "Random (csharp)",
     "path": "./cSharp/random"
+	},
+	{
+		"dockerId": "arboretum-my-custom-bot",
+		"identifier": "My Custom Bot",
+    "path": "./js/myCustomBot"
+	},
+	{
+		"dockerId": "arboretum-ethan-xai-bot",
+		"identifier": "Ethan XAI",
+    "path": "./js/EthanXAI"
+	},
+	{
+		"dockerId": "arboretum-ethan-xai-bot:v2",
+		"identifier": "Ethan XAI v2",
+    "path": "./js/EthanXAI"
+	},
+	{
+		"dockerId": "arboretum-ethan-xai-bot:v3",
+		"identifier": "Ethan XAI v3 (Logging)",
+    "path": "./js/EthanXAI"
+	},
+	{
+		"dockerId": "arboretum-ethan-xai-bot:v4",
+		"identifier": "Ethan XAI v4 (Path Focus)",
+    "path": "./js/EthanXAI"
 	}
 ]

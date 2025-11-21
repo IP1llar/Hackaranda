@@ -1,6 +1,9 @@
 import { arboretum } from "./arboretum/index.js";
 import { tictactoe } from "./tictactoe/index.js";
+import { regicide } from "./regicide/index.js";
 import type { gameInterface } from "./types.js";
+
+export { arboretum, tictactoe, regicide };
 
 const gameTypes: Record<
   gameTitle,
@@ -8,8 +11,9 @@ const gameTypes: Record<
 > = {
   tictactoe: tictactoe,
   arboretum: arboretum,
+  regicide: regicide,
 };
 
-export type gameTitle = "arboretum" | "tictactoe";
-export const allGameTitles: gameTitle[] = ["arboretum", "tictactoe"];
+export type gameTitle = "arboretum" | "tictactoe" | "regicide";
+export const allGameTitles: gameTitle[] = ["arboretum", "tictactoe", "regicide"];
 export default gameTypes;
