@@ -306,6 +306,7 @@ function getActivePlayerState(gameState: RegicideState): PlayerState {
         grid: gameState.grid,
         ploys: gameState.ploys,
         deadRoyals: gameState.deadRoyals,
+        activeRoyals: gameState.activeRoyals,
         currentCard: gameState.currentCard,
         royalStats: gameState.royalStats,
         activeTurn: true,
@@ -345,10 +346,100 @@ export const regicide: gameInterface<
         finalState
     }),
     getWinner,
-    displayForUser: () => { }, // Implement later
+    displayForUser: (state, identifier) => {
+        console.clear();
+        console.log(`Player: ${identifier}`);
+        console.log("\n--- Active Royals ---");
+        state.activeRoyals.forEach((royal, index) => {
+            if (royal) {
+                const key = `${royal.suit}-${royal.value}`;
+                const stats = state.royalStats ? state.royalStats[key] : undefined;
+                const health = stats ? stats.health : getRoyalHealth(royal);
+                const armour = stats ? stats.armour : 0;
+                console.log(`${index}: ${royal.value} of ${royal.suit} (HP: ${health}, Armour: ${armour})`);
+            }
+        });
+
+        console.log("\n--- Grid ---");
+        state.grid.forEach((stack, index) => {
+            const top = stack.length > 0 ? stack[stack.length - 1] : null;
+            const topStr = top ? `${top.value} of ${top.suit}` : "Empty";
+            console.log(`${index}: [${stack.length} cards] Top: ${topStr}`);
+        });
+
+        console.log("\n--- Hand ---");
+        if (state.currentCard) {
+            console.log(`Current Card: ${state.currentCard.value} of ${state.currentCard.suit}`);
+        } else {
+            console.log("Current Card: None (Draw pile empty?)");
+        }
+
+        console.log("\nPloys:");
+        state.ploys.forEach((card, index) => {
+            console.log(`${index}: ${card.value} of ${card.suit}`);
+        });
+
+        console.log(`\nDead Royals: ${state.deadRoyals.length}/12`);
+    },
     showPreviousTurn: async () => { },
-    userMoveMessage: () => "Your move",
-    userMoveTranslate: (move) => ({ type: "DISCARD", cards: [] }), // Implement parser
+    userMoveMessage: () => "Enter move (place <pos>, ploy <card_idx> <target_pos> [dest_pos], armour <royal_idx>)",
+    userMoveTranslate: (input: string, gameState: PlayerState) => {
+        const parts = input.split(" ");
+        const command = parts[0].toLowerCase();
+
+        if (command === "place") {
+            const p1 = parts[1];
+            if (p1) {
+                const pos = parseInt(p1);
+                if (!isNaN(pos) && pos >= 0 && pos < 9) {
+                    return { type: "PLACE", position: pos as GridPosition };
+                }
+            }
+        }
+
+        if (command === "ploy") {
+            const p1 = parts[1];
+            const p2 = parts[2];
+            const p3 = parts[3];
+
+            if (!p1 || !p2) return { type: "DISCARD", cards: [] };
+
+            const cardIndex = parseInt(p1);
+            const targetPos = parseInt(p2);
+            const destPos = p3 ? parseInt(p3) : undefined;
+
+            if (!isNaN(cardIndex) && cardIndex >= 0 && cardIndex < gameState.ploys.length) {
+                const card = gameState.ploys[cardIndex];
+                if (card) {
+                    if (isAce(card)) {
+                        if (!isNaN(targetPos) && targetPos >= 0 && targetPos < 9) {
+                            return { type: "PLOY", card: card, target: targetPos as GridPosition, action: "REMOVE" };
+                        }
+                    } else if (isJoker(card)) {
+                        if (!isNaN(targetPos) && targetPos >= 0 && targetPos < 9 &&
+                            destPos !== undefined && !isNaN(destPos) && destPos >= 0 && destPos < 9) {
+                            return { type: "PLOY", card: card, target: targetPos as GridPosition, destination: destPos as GridPosition, action: "MOVE" };
+                        }
+                    }
+                }
+            }
+        }
+
+        if (command === "armour") {
+            const p1 = parts[1];
+            if (p1) {
+                const royalIndex = parseInt(p1);
+                if (!isNaN(royalIndex) && royalIndex >= 0 && royalIndex < gameState.activeRoyals.length) {
+                    const royal = gameState.activeRoyals[royalIndex];
+                    if (royal) {
+                        return { type: "ARMOUR", targetRoyal: royal };
+                    }
+                }
+            }
+        }
+
+        return { type: "DISCARD", cards: [] }; // Default or invalid move
+    },
     playerMoveValidator: () => () => true,
     showScore: () => { },
     defaultBotDetail: (num) => ({ dockerId: "", identifier: "Bot" })

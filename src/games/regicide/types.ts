@@ -68,6 +68,7 @@ export type PlayerState = {
     grid: Card[][];
     ploys: Card[];
     deadRoyals: Card[];
+    activeRoyals: (Card | null)[];
     currentCard: Card | null;
     royalStats: Record<string, RoyalStats>; // Map converted to object for JSON serialization
 
