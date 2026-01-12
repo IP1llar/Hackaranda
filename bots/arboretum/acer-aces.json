@@ -1,0 +1,23 @@
+
+[
+    {
+		"dockerId": "acer-aces-modular-sp",
+		"identifier": "AcerAces Modular SP"
+	},
+    {
+		"dockerId": "acer-aces-strategic-pacifist:v2",
+		"identifier": "AcerAces Strategic Pacifist"
+	},
+	{
+		"dockerId": "arboretum-decent-bot",
+		"identifier": "Decent"
+	},
+    {
+		"dockerId": "arboretum-busy-bot",
+		"identifier": "Busy"
+	},
+	{
+		"dockerId": "arboretum-random-bot",
+		"identifier": "Random"
+	}
+]
